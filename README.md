@@ -21,9 +21,11 @@ Au lancement, Burp Suite propose deux modes de projet : un projet sauvegardé su
 
 Une fois Burp ouvert, la première vérification à faire est l'état de l'interception. Il est recommandé de **laisser l'interception désactivée** (`Intercept is off`) à ce stade : si elle est active avant que le proxy soit configuré sur l'émulateur, toutes les requêtes entrantes seront mises en attente et bloqueront la navigation sans raison.
 
-![Création du projet temporaire](screenshots/01_burp_projet_temporaire.png)
 
-![Vérification que l'interception est désactivée](screenshots/02_intercept_off.png)
+<img width="777" height="350" alt="Screenshot 2026-03-18 015422" src="https://github.com/user-attachments/assets/852c0363-c40e-4269-8509-0dc61177c05f" />
+
+<img width="781" height="358" alt="Screenshot 2026-03-18 015429" src="https://github.com/user-attachments/assets/a2de1887-60e6-4fbf-9262-49a54470be2a" />
+
 
 ---
 
@@ -37,11 +39,13 @@ Il faut donc modifier cette configuration pour que Burp écoute sur **toutes les
 
 Chemin dans Burp : **Proxy → Settings → Proxy listeners → Edit → Binding tab → All interfaces**
 
-![Liste des proxy listeners actifs](screenshots/03_proxy_listeners.png)
 
-![Modification du listener - onglet Binding](screenshots/04_edit_proxy_listener.png)
+<img width="778" height="349" alt="Screenshot 2026-03-18 015450" src="https://github.com/user-attachments/assets/deef7799-c42d-4cd2-8b84-1dd5bfdf9d7c" />
 
-![Listener configuré sur 0.0.0.0:8080](screenshots/05_proxy_all_interfaces.png)
+<img width="779" height="406" alt="Screenshot 2026-03-18 015459" src="https://github.com/user-attachments/assets/dc7d39f8-0c22-4769-831e-16f194b689e7" />
+
+<img width="780" height="283" alt="Screenshot 2026-03-18 015507" src="https://github.com/user-attachments/assets/4307e72a-c9ec-4366-b155-c2c68531b330" />
+
 
 ---
 
@@ -61,7 +65,7 @@ Dans ce laboratoire, l'interface réseau utilisée est `enp0s17` avec l'adresse 
 
 > Il faut s'assurer d'utiliser l'adresse IP de l'interface connectée au même réseau que l'émulateur, et non le loopback (`127.0.0.1`).
 
-![Résultat de la commande ip a — adresse 192.168.1.196](screenshots/06_ip_machine_hote.png)
+<img width="773" height="561" alt="Screenshot 2026-03-18 015515" src="https://github.com/user-attachments/assets/8a036f4b-86b1-4d71-b681-82c6df6e8bf9" />
 
 ---
 
@@ -77,7 +81,8 @@ Renseigner :
 
 Dès que cette configuration est validée, tout le trafic HTTP de l'émulateur sera redirigé vers Burp Suite. Le trafic HTTPS sera également redirigé, mais restera illisible tant que le certificat CA de Burp n'est pas installé (traité à l'étape 7).
 
-![Configuration du proxy Wi-Fi sur l'émulateur Android](screenshots/07_proxy_android_config.png)
+
+<img width="350" height="645" alt="Screenshot 2026-03-18 015532" src="https://github.com/user-attachments/assets/fcabc52e-2e8d-4215-b05e-5930a5549abd" />
 
 ---
 
@@ -96,9 +101,10 @@ Dans Burp Suite, l'onglet **Proxy → HTTP history** liste toutes les requêtes 
 
 La présence de ces entrées dans l'historique confirme que le proxy intercepte bien le trafic.
 
-![Historique de navigation dans le navigateur de l'émulateur](screenshots/08_historique_navigateur.png)
+<img width="387" height="651" alt="Screenshot 2026-03-18 015538" src="https://github.com/user-attachments/assets/a1516285-9f5d-48ac-a545-13d17b8e7ff4" />
 
-![Vue HTTP History dans Burp Suite](screenshots/09_http_history_burp.png)
+
+<img width="774" height="272" alt="Screenshot 2026-03-18 015550" src="https://github.com/user-attachments/assets/aa2989f6-1ee1-434d-9211-553e154477a8" />
 
 ---
 
@@ -122,7 +128,7 @@ Points d'attention lors de l'analyse :
 - Des **cookies sans attributs de sécurité** (`Secure`, `HttpOnly`, `SameSite`) — vulnérables au vol ou à la manipulation.
 - Des **données personnelles transmises en clair** dans le corps de la requête (formulaires non chiffrés).
 
-![Analyse d'une requête HTTP — vue Raw et Inspector](screenshots/10_analyse_requete.png)
+<img width="779" height="303" alt="Screenshot 2026-03-18 015559" src="https://github.com/user-attachments/assets/f7a0ad0d-eedc-4c26-9ac2-45d481822749" />
 
 ---
 
@@ -139,9 +145,11 @@ Une fois activée, chaque requête émise par l'émulateur est mise en pause dan
 
 > Penser à **désactiver l'interception** après la démonstration (`Intercept is off`). Laisser l'interception active bloque tout le trafic de l'émulateur et peut sembler être un dysfonctionnement.
 
-![Interception activée dans Burp Suite](screenshots/11_intercept_on.png)
+<img width="776" height="295" alt="Screenshot 2026-03-18 015605" src="https://github.com/user-attachments/assets/ecc483d9-de92-4806-965b-f3fb9c167b18" />
 
-![Requête mise en attente dans l'interface d'interception](screenshots/12_requetes_interceptees.png)
+
+<img width="776" height="293" alt="Screenshot 2026-03-18 015615" src="https://github.com/user-attachments/assets/4af6d093-d7e7-4439-9abe-91d557348d31" />
+
 
 ---
 
@@ -159,13 +167,14 @@ Paramètres → Sécurité → Chiffrement et identifiants → Installer un cert
 
 > ⚠️ **Avertissement important** : Ce certificat ne doit jamais être installé sur un appareil personnel ou de production. Il donne à Burp Suite la capacité de déchiffrer **tout** le trafic HTTPS de l'appareil. À utiliser exclusivement en environnement de laboratoire isolé, et à supprimer impérativement en fin de session.
 
-![Paramètres de sécurité Android — Chiffrement et identifiants](screenshots/13_securite_chiffrement.png)
 
-![Gestionnaire de certificats et identifiants](screenshots/14_credentials_stockage.png)
+<img width="377" height="721" alt="Screenshot 2026-03-18 015626" src="https://github.com/user-attachments/assets/4d26c230-9e77-4bfa-96f1-caba45117c66" />
 
-![Confirmation de l'installation du certificat CA Burp](screenshots/15_installer_certificat.png)
+<img width="388" height="609" alt="Screenshot 2026-03-18 015648" src="https://github.com/user-attachments/assets/a48e7751-c9e0-44db-b9e0-04bdd240d6ac" />
 
----
+<img width="375" height="404" alt="Screenshot 2026-03-18 015653" src="https://github.com/user-attachments/assets/f9d1f3be-0453-43f7-bb6d-c83c39f115c5" />
+
+
 
 ## Bonnes pratiques de sécurité réseau mobile
 
